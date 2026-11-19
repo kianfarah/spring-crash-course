@@ -1,0 +1,6 @@
+# Liquibase entry point (Spring Boot looks for this file by default).
+# Changesets run in order, each exactly once; Liquibase records them in the DATABASECHANGELOG table.
+# RULE: never edit a changeset that has already run. Add a new file instead.
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001-create-users-table.yaml

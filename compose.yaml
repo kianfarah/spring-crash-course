@@ -1,0 +1,11 @@
+# Local Postgres for development. Spring Boot starts this automatically on ./mvnw spring-boot:run
+# (thanks to spring-boot-docker-compose) and configures the datasource for us. No URL/password in application.yml!
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: crashcourse
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+    ports:
+      - "5432"

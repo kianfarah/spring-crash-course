@@ -3,41 +3,37 @@ package com.example.crashcourse.user;
 import com.example.crashcourse.notification.WelcomeService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
-// Business logic lives in a @Service. For now users are kept in memory; step 05 swaps this for a database.
+// Same public methods as in step 04, but the HashMap is replaced by a repository.
+// The controller didn't have to change at all.
 @Service
 public class UserService {
 
-    private final Map<Long, User> users = new ConcurrentHashMap<>();
-    private final AtomicLong nextId = new AtomicLong(1);
+    private final UserRepository userRepository;
     private final WelcomeService welcomeService;
 
-    public UserService(WelcomeService welcomeService) {
+    public UserService(UserRepository userRepository, WelcomeService welcomeService) {
+        this.userRepository = userRepository;
         this.welcomeService = welcomeService;
     }
 
     public List<User> findAll() {
-        return new ArrayList<>(users.values());
+        return userRepository.findAll();
     }
 
     public Optional<User> findById(Long id) {
-        return Optional.ofNullable(users.get(id));
+        return userRepository.findById(id);
     }
 
     public User create(User user) {
-        User saved = new User(nextId.getAndIncrement(), user.username(), user.email());
-        users.put(saved.id(), saved);
+        User saved = userRepository.save(new User(null, user.username(), user.email()));
         welcomeService.welcome(saved.email());
         return saved;
     }
 
     public void delete(Long id) {
-        users.remove(id);
+        userRepository.deleteById(id);
     }
 }
