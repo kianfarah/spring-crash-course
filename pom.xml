@@ -3,15 +3,44 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Plain Java: no Spring, no dependencies at all. -->
+    <!-- The parent pins compatible versions of every Spring/3rd-party library for us. -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.2</version>
+        <relativePath/>
+    </parent>
+
     <groupId>com.example</groupId>
     <artifactId>crashcourse</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>crashcourse</name>
-    <description>Spring Boot crash course demo - plain Java starting point</description>
+    <description>Spring Boot crash course demo</description>
 
     <properties>
-        <maven.compiler.release>25</maven.compiler.release>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>25</java.version>
     </properties>
+
+    <dependencies>
+        <!-- "Starters" = curated bundles of dependencies + auto-configuration. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webmvc-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

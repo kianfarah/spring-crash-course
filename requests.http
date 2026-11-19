@@ -1,5 +1,0 @@
-### Requests for the IntelliJ HTTP client (or copy them as curl commands).
-### Start the app first: run Main.main() in IntelliJ
-
-### List all users
-GET http://localhost:8080/api/users
