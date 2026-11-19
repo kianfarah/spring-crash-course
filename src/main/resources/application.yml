@@ -11,6 +11,17 @@ app:
 notification:
   channel: email
 
+# Step 08: which actuator endpoints are reachable over HTTP (only "health" by default).
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, beans, env, metrics
+  endpoint:
+    health:
+      show-details: always
+# ^ fine for a demo; in production expose as little as possible and secure it.
+
 # Every Boot default can be overridden here, e.g. the port:
 # server:
 #   port: 9090

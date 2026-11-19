@@ -40,3 +40,12 @@ Content-Type: application/json
 
 ### Step 06: unknown id -> 404 Not Found
 GET http://localhost:8080/api/users/999
+
+### Step 08: is the app (and its database) healthy?
+GET http://localhost:8080/actuator/health
+
+### Step 08: every bean in the container (compare with step 02!)
+GET http://localhost:8080/actuator/beans
+
+### Step 08: how many HTTP requests have we served?
+GET http://localhost:8080/actuator/metrics/http.server.requests

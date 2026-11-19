@@ -28,6 +28,12 @@
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
 
+        <!-- Step 08: production-ready endpoints (/actuator/health, /actuator/info, metrics, ...) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- Step 06: Bean Validation (@NotBlank, @Email, ...) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
