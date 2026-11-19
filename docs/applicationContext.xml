@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  XML-BASED configuration: the original way to define beans (before annotations, ~2009).
+  FOR READING ONLY: this app does not load this file. You'll still find it in older projects.
+
+  It describes the same beans as step 02, without a single annotation in the Java classes:
+    <bean id="clock" ...>               ==  @Bean clock() in AppConfig
+    <bean id="notificationService" ...> ==  @Bean chosenNotificationService() in AppConfig (email only: no "if" in XML)
+    <bean id="welcomeService" ...>      ==  @Service on WelcomeService + constructor injection
+
+  A Spring Boot app could still load it with @ImportResource("classpath:applicationContext.xml").
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="clock" class="java.time.Clock" factory-method="systemDefaultZone"/>
+
+    <bean id="notificationService" class="com.example.crashcourse.notification.EmailNotificationService"/>
+
+    <bean id="welcomeService" class="com.example.crashcourse.notification.WelcomeService">
+        <constructor-arg ref="notificationService"/>
+        <constructor-arg ref="clock"/>
+    </bean>
+</beans>
