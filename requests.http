@@ -1,0 +1,20 @@
+### Requests for the IntelliJ HTTP client (or copy them as curl commands).
+### Start the app first: ./mvnw spring-boot:run
+
+### List all users
+GET http://localhost:8080/api/users
+
+### Create a user
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "ada",
+  "email": "ada@example.com"
+}
+
+### Get one user (exercise in step 04)
+GET http://localhost:8080/api/users/1
+
+### Delete a user
+DELETE http://localhost:8080/api/users/1
