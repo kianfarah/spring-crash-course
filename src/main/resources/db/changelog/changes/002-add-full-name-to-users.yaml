@@ -1,0 +1,12 @@
+# Exercise solution: a NEW changeset. 001 has already run in every database, so we never touch it.
+databaseChangeLog:
+  - changeSet:
+      id: 002-add-full-name-to-users
+      author: crashcourse
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: full_name
+                  type: varchar(255)

@@ -10,7 +10,8 @@ Content-Type: application/json
 
 {
   "username": "ada",
-  "email": "ada@example.com"
+  "email": "ada@example.com",
+  "fullName": "Ada Lovelace"
 }
 
 ### Get one user (exercise in step 04)

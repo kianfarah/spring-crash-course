@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public User create(User user) {
-        User saved = userRepository.save(new User(null, user.username(), user.email()));
+        User saved = userRepository.save(new User(null, user.username(), user.email(), user.fullName()));
         welcomeService.welcome(saved.email());
         return saved;
     }
