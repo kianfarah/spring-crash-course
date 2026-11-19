@@ -19,3 +19,24 @@ GET http://localhost:8080/api/users/1
 
 ### Delete a user
 DELETE http://localhost:8080/api/users/1
+
+### Step 06: invalid input -> 400 Bad Request
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "",
+  "email": "not-an-email"
+}
+
+### Step 06: same email twice -> 409 Conflict (run "Create a user" first)
+POST http://localhost:8080/api/users
+Content-Type: application/json
+
+{
+  "username": "ada2",
+  "email": "ada@example.com"
+}
+
+### Step 06: unknown id -> 404 Not Found
+GET http://localhost:8080/api/users/999

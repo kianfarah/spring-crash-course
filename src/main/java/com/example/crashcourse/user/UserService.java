@@ -2,12 +2,10 @@ package com.example.crashcourse.user;
 
 import com.example.crashcourse.notification.WelcomeService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
-// Same public methods as in step 04, but the HashMap is replaced by a repository.
-// The controller didn't have to change at all.
 @Service
 public class UserService {
 
@@ -23,17 +21,29 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+    public User getById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    public User create(User user) {
-        User saved = userRepository.save(new User(null, user.username(), user.email(), user.fullName()));
+    // @Transactional: everything in this method runs in ONE database transaction.
+    // If any line throws a RuntimeException, the INSERT is rolled back automatically.
+    // (Works because Spring wraps this bean in a proxy - remember the $$SpringCGLIB$$ names from step 02?)
+    @Transactional
+    public User create(CreateUserRequest request) {
+        if (userRepository.findByEmail(request.email()).isPresent()) {
+            throw new EmailAlreadyTakenException(request.email());
+        }
+        User saved = userRepository.save(new User(null, request.username(), request.email(), request.fullName()));
         welcomeService.welcome(saved.email());
         return saved;
     }
 
+    @Transactional
     public void delete(Long id) {
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException(id);
+        }
         userRepository.deleteById(id);
     }
 }

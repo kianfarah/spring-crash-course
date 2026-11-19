@@ -1,7 +1,7 @@
 package com.example.crashcourse.user;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,26 +31,24 @@ public class UserController {
         return userService.findAll();
     }
 
-    // POST /api/users   body: {"username":"ada","email":"ada@example.com"}
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public User create(@RequestBody User user) {
-        return userService.create(user);
+    // GET /api/users/1  -> 200, or 404 via UserNotFoundException + GlobalExceptionHandler
+    @GetMapping("/{id}")
+    public User findById(@PathVariable Long id) {
+        return userService.getById(id);
     }
 
-    // DELETE /api/users/1
+    // POST /api/users
+    // @Valid runs the checks on CreateUserRequest; if one fails Spring answers 400 before this method runs.
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public User create(@Valid @RequestBody CreateUserRequest request) {
+        return userService.create(request);
+    }
+
+    // DELETE /api/users/1  -> 204, or 404
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
         userService.delete(id);
-    }
-
-    // GET /api/users/1  -> 200 + user, or 404 if unknown.
-    // ResponseEntity lets you choose the status code (and headers) yourself.
-    @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        return userService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
     }
 }
