@@ -4,6 +4,7 @@ import com.example.crashcourse.notification.WelcomeService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -12,6 +13,7 @@ import java.util.Arrays;
 // @SpringBootApplication = @Configuration + @EnableAutoConfiguration + @ComponentScan.
 // Component scanning starts in THIS package, so all our classes live in com.example.crashcourse (or below).
 @SpringBootApplication
+@ConfigurationPropertiesScan // finds @ConfigurationProperties classes like AppProperties
 public class CrashCourseApplication {
 
     public static void main(String[] args) {

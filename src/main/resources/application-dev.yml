@@ -1,0 +1,12 @@
+# Only loaded when the "dev" profile is active:
+#   ./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+# Values here override application.yml.
+app:
+  welcome-message: "[DEV] Welcome to the test environment!"
+
+notification:
+  channel: sms
+
+logging:
+  level:
+    com.example: debug

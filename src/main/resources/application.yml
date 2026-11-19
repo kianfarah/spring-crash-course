@@ -1,3 +1,16 @@
 spring:
   application:
     name: crashcourse
+
+# Our own settings, read by AppProperties.
+app:
+  welcome-message: "Welcome aboard!"
+  sender-email: no-reply@example.com
+
+# A single setting, read with @Value in AppConfig: which NotificationService to create (email | sms).
+notification:
+  channel: email
+
+# Every Boot default can be overridden here, e.g. the port:
+# server:
+#   port: 9090

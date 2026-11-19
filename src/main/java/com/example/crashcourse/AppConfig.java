@@ -3,9 +3,9 @@ package com.example.crashcourse;
 import com.example.crashcourse.notification.EmailNotificationService;
 import com.example.crashcourse.notification.NotificationService;
 import com.example.crashcourse.notification.SmsNotificationService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import java.time.Clock;
 
@@ -23,11 +23,10 @@ public class AppConfig {
 
     // Logic that annotations alone can't express: choose the implementation from a setting.
     // The bean is named after the method: "chosenNotificationService".
-    // Try: ./mvnw spring-boot:run -Dspring-boot.run.arguments=--notification.channel=sms
-    // (Environment is the raw way to read a setting; step 03 shows nicer ways.)
+    // @Value injects ONE setting: notification.channel from application.yml ("email" after the colon is the
+    // default if it's missing). The dev profile switches it to "sms".
     @Bean
-    public NotificationService chosenNotificationService(Environment environment) {
-        String channel = environment.getProperty("notification.channel", "email");
+    public NotificationService chosenNotificationService(@Value("${notification.channel:email}") String channel) {
         return switch (channel) {
             case "sms" -> new SmsNotificationService("CrashCourse");
             default -> new EmailNotificationService();
