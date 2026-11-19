@@ -1,6 +1,7 @@
 package com.example.crashcourse.user;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,5 +45,12 @@ public class UserController {
         userService.delete(id);
     }
 
-    // EXERCISE: add GET /api/users/{id} that returns one user, or 404 if it doesn't exist.
+    // GET /api/users/1  -> 200 + user, or 404 if unknown.
+    // ResponseEntity lets you choose the status code (and headers) yourself.
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        return userService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }
