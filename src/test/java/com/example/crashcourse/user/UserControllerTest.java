@@ -46,5 +46,12 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.errors.email").exists());
     }
 
-    // EXERCISE: GET /api/users/99 should return 404 when the service throws UserNotFoundException.
+    @Test
+    void returns404ForUnknownUser() throws Exception {
+        when(userService.getById(99L)).thenThrow(new UserNotFoundException(99L));
+
+        mockMvc.perform(get("/api/users/99"))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.detail").value("User 99 not found"));
+    }
 }
